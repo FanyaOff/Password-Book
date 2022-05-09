@@ -54,6 +54,7 @@ namespace Password_Book
         {
             try
             {
+                guna2ComboBox1.Items.Clear();
                 string folder = $"{Path.GetTempPath()}\\{misc.GenerateHash($"{Environment.UserName}", $"{misc.getHwid()}")}";
                 foreach (string file in Directory.EnumerateFiles(folder, "*.pw", SearchOption.AllDirectories))
                 {
