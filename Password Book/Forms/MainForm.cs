@@ -52,11 +52,15 @@ namespace Password_Book
 
         public void updateList()
         {
-            string folder = $"{Path.GetTempPath()}\\{misc.GenerateHash($"{Environment.UserName}", $"{misc.getHwid()}")}";
-            foreach (string file in Directory.EnumerateFiles(folder, "*.pw", SearchOption.AllDirectories))
+            try
             {
-                guna2ComboBox1.Items.Add(Path.GetFileNameWithoutExtension(file));
+                string folder = $"{Path.GetTempPath()}\\{misc.GenerateHash($"{Environment.UserName}", $"{misc.getHwid()}")}";
+                foreach (string file in Directory.EnumerateFiles(folder, "*.pw", SearchOption.AllDirectories))
+                {
+                    guna2ComboBox1.Items.Add(Path.GetFileNameWithoutExtension(file));
+                }
             }
+            catch (DirectoryNotFoundException) {}
         }
 
         private void MainForm_Load(object sender, EventArgs e)
