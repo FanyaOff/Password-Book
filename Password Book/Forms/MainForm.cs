@@ -40,6 +40,7 @@ namespace Password_Book
                 StreamWriter sw = new StreamWriter($"{folder}//{nameBox.Text}.pw");
                 sw.WriteLine($"{misc.Encrypt($"{loginBox.Text}")}", "\n");
                 sw.WriteLine($"{misc.Encrypt($"{passBox.Text}")}", "\n");
+                sw.WriteLine($"{misc.GenerateHash(misc.getHwid(), Environment.UserName)}");
                 sw.Close();
                 updateList();
                 label7.Text = "Succeful added!";
@@ -61,6 +62,17 @@ namespace Password_Book
         private void MainForm_Load(object sender, EventArgs e)
         {
             updateList();
+        }
+
+        private void guna2Button3_Click(object sender, EventArgs e)
+        {
+            if (guna2ComboBox1.SelectedIndex == -1)
+            {
+                label7.Text = "Please, select a value";
+                return;
+            }
+            string folder = $"{Path.GetTempPath()}//{misc.GenerateHash($"{Environment.UserName}", $"{misc.getHwid()}")}";
+            File.Delete($"{folder}//{guna2ComboBox1.Text}.pw");
         }
     }
 }

@@ -35,7 +35,7 @@ namespace Password_Book
         {
             byte[] inputArray = Encoding.UTF8.GetBytes(input);
             TripleDESCryptoServiceProvider tripleDES = new TripleDESCryptoServiceProvider();
-            tripleDES.Key = Encoding.UTF8.GetBytes("LKIURH37FG4ISKJH");
+            tripleDES.Key = Encoding.UTF8.GetBytes(getHwid());
             tripleDES.Mode = CipherMode.ECB;
             tripleDES.Padding = PaddingMode.PKCS7;
             ICryptoTransform cTransform = tripleDES.CreateEncryptor();
@@ -47,7 +47,7 @@ namespace Password_Book
         {
             byte[] inputArray = Convert.FromBase64String(input);
             TripleDESCryptoServiceProvider tripleDES = new TripleDESCryptoServiceProvider();
-            tripleDES.Key = Encoding.UTF8.GetBytes("LKIURH37FG4ISKJH");
+            tripleDES.Key = Encoding.UTF8.GetBytes(getHwid());
             tripleDES.Mode = CipherMode.ECB;
             tripleDES.Padding = PaddingMode.PKCS7;
             ICryptoTransform cTransform = tripleDES.CreateDecryptor();

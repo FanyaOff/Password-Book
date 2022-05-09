@@ -17,7 +17,16 @@ namespace Password_Book
         {
             string hwid = File.ReadLines($"{Environment.UserName}.pw").Skip(0).First();
             string password = File.ReadLines($"{Environment.UserName}.pw").Skip(1).First();
+            string dataFile = $"{Path.GetTempPath()}//{misc.GenerateHash($"{Environment.UserName}", $"{misc.getHwid()}")}//{Program.mf.guna2ComboBox1.Text}.pw";
+            string login = misc.Decrypt(File.ReadLines(dataFile).Skip(0).First());
+            string pass = misc.Decrypt(File.ReadLines(dataFile).Skip(1).First());
+            string dataHwid = misc.Decrypt(File.ReadLines(dataFile).Skip(2).First());
 
+            if (dataHwid != hwid)
+            {
+                label2.Text = "Invalid HWID";
+                return;
+            }
             if (misc.GenerateHash(misc.getHwid(), $"{Environment.UserName}") != hwid)
             {
                 label2.Text = "Invalid HWID";
@@ -29,9 +38,6 @@ namespace Password_Book
                 return;
             }
             MainForm main = new MainForm();
-            string dataFile = $"{Path.GetTempPath()}//{misc.GenerateHash($"{Environment.UserName}", $"{misc.getHwid()}")}//{Program.mf.guna2ComboBox1.Text}.pw";
-            string login = misc.Decrypt(File.ReadLines(dataFile).Skip(0).First());
-            string pass = misc.Decrypt(File.ReadLines(dataFile).Skip(1).First());
             Clipboard.SetText($"{login}:{pass}");
             Program.mf.label7.Text = "Copied";
             this.Close();
