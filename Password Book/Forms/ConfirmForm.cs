@@ -20,9 +20,8 @@ namespace Password_Book
             string dataFile = $"{Path.GetTempPath()}//{misc.GenerateHash($"{Environment.UserName}", $"{misc.getHwid()}")}//{Program.mf.guna2ComboBox1.Text}.pw";
             string login = misc.Decrypt(File.ReadLines(dataFile).Skip(0).First());
             string pass = misc.Decrypt(File.ReadLines(dataFile).Skip(1).First());
-            string dataHwid = misc.Decrypt(File.ReadLines(dataFile).Skip(2).First());
-
-            if (dataHwid != hwid)
+            string dataHwid = File.ReadLines(dataFile).Skip(2).First();
+            if (dataHwid != misc.GenerateHash(misc.getHwid(), Environment.UserName))
             {
                 label2.Text = "Invalid HWID";
                 return;

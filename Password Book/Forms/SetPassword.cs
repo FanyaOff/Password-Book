@@ -21,7 +21,7 @@ namespace Password_Book
             sw.WriteLine(misc.GenerateHash(guna2TextBox1.Text, $"{misc.getHwid()}"), "\n"); // crypted pass
             sw.WriteLine("?");
             sw.Close();
-            Application.Exit();
+            Application.Restart();
         }
 
         private void guna2CirclePictureBox1_Click(object sender, EventArgs e)
