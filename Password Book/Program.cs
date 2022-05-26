@@ -13,7 +13,9 @@ namespace Password_Book
         [STAThread]
         static void Main()
         {
-            if (File.Exists($"{Environment.UserName}.pw"))
+            Helpers misc = new Helpers();
+            string folder = $"{Path.GetTempPath()}//{misc.GenerateHash($"{Environment.UserName}", $"{misc.getHwid()}")}";
+            if (File.Exists($"{folder}//{misc.GenerateHash(Environment.UserName, misc.getHwid())}"))
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);

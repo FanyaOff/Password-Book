@@ -14,12 +14,12 @@ namespace Password_Book
 
         private void guna2Button1_Click(object sender, EventArgs e)
         {
-            FileStream fs = File.Create($"{Environment.UserName}.pw");
+            string folder = $"{Path.GetTempPath()}\\{misc.GenerateHash($"{Environment.UserName}", $"{misc.getHwid()}")}";
+            FileStream fs = File.Create($"{folder}\\{misc.GenerateHash(Environment.UserName, misc.getHwid())}");
             fs.Close();
-            StreamWriter sw = new StreamWriter($"{Environment.UserName}.pw");
+            StreamWriter sw = new StreamWriter($"{folder}\\{misc.GenerateHash(Environment.UserName, misc.getHwid())}");
             sw.WriteLine(misc.GenerateHash(misc.getHwid(), $"{Environment.UserName}"), "\n"); // crypted hwid
             sw.WriteLine(misc.GenerateHash(guna2TextBox1.Text, $"{misc.getHwid()}"), "\n"); // crypted pass
-            sw.WriteLine("?");
             sw.Close();
             Application.Restart();
         }

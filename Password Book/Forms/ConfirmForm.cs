@@ -15,8 +15,10 @@ namespace Password_Book
 
         private void guna2Button1_Click(object sender, EventArgs e)
         {
-            string hwid = File.ReadLines($"{Environment.UserName}.pw").Skip(0).First();
-            string password = File.ReadLines($"{Environment.UserName}.pw").Skip(1).First();
+            string folder = $"{Path.GetTempPath()}\\{misc.GenerateHash($"{Environment.UserName}", $"{misc.getHwid()}")}";
+
+            string hwid = File.ReadLines($"{folder}\\{misc.GenerateHash(Environment.UserName, misc.getHwid())}").Skip(0).First();
+            string password = File.ReadLines($"{folder}\\{misc.GenerateHash(Environment.UserName, misc.getHwid())}").Skip(1).First();
             string dataFile = $"{Path.GetTempPath()}//{misc.GenerateHash($"{Environment.UserName}", $"{misc.getHwid()}")}//{Program.mf.guna2ComboBox1.Text}.pw";
             string login = misc.Decrypt(File.ReadLines(dataFile).Skip(0).First());
             string pass = misc.Decrypt(File.ReadLines(dataFile).Skip(1).First());

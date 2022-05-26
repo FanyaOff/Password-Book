@@ -44,6 +44,9 @@ namespace Password_Book
                 sw.Close();
                 updateList();
                 label7.Text = "Succeful added!";
+                nameBox.Text = null;
+                loginBox.Text = null;
+                passBox.Text = null;
                 return;
             }
             Directory.CreateDirectory(folder);
@@ -58,7 +61,7 @@ namespace Password_Book
                 string folder = $"{Path.GetTempPath()}\\{misc.GenerateHash($"{Environment.UserName}", $"{misc.getHwid()}")}";
                 foreach (string file in Directory.EnumerateFiles(folder, "*.pw", SearchOption.AllDirectories))
                 {
-                    guna2ComboBox1.Items.Add(Path.GetFileNameWithoutExtension(file));
+                     guna2ComboBox1.Items.Add(Path.GetFileNameWithoutExtension(file));
                 }
             }
             catch (DirectoryNotFoundException) {}
@@ -78,6 +81,7 @@ namespace Password_Book
             }
             string folder = $"{Path.GetTempPath()}//{misc.GenerateHash($"{Environment.UserName}", $"{misc.getHwid()}")}";
             File.Delete($"{folder}//{guna2ComboBox1.Text}.pw");
+            updateList();
         }
     }
 }
