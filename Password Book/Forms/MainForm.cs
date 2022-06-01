@@ -31,6 +31,11 @@ namespace Password_Book
 
         private void guna2Button2_Click(object sender, EventArgs e)
         {
+            if (nameBox.Text == "" || loginBox.Text == "" || passBox.Text == "")
+            {
+                label7.Text = "Fields clear";
+                return;
+            }
             start:
             string folder = $"{Path.GetTempPath()}//{misc.GenerateHash($"{Environment.UserName}", $"{misc.getHwid()}")}";
             if (Directory.Exists(folder))
@@ -73,6 +78,13 @@ namespace Password_Book
         }
 
         private void guna2Button3_Click(object sender, EventArgs e)
+        {
+            string folder = $"{Path.GetTempPath()}\\{misc.GenerateHash($"{Environment.UserName}", $"{misc.getHwid()}")}";
+            Directory.Delete(folder, recursive: true);
+            Application.Restart();
+        }
+
+        private void guna2Button4_Click(object sender, EventArgs e)
         {
             if (guna2ComboBox1.SelectedIndex == -1)
             {
