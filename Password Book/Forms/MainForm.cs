@@ -42,7 +42,7 @@ namespace Password_Book
             {
                 if (nameBox.Text == "" || loginBox.Text == "" || passBox.Text == "")
                 {
-                    label7.Text = "Fields clear";
+                    label7.Text = "Invalid data";
                     return;
                 }
                 start:
@@ -64,6 +64,7 @@ namespace Password_Book
                     nameBox.Text = null;
                     loginBox.Text = null;
                     passBox.Text = null;
+                    Thread.CurrentThread.Abort();
                     return;
                 }
                 Directory.CreateDirectory(folder);

@@ -8,7 +8,6 @@ namespace Password_Book
 {
     public partial class SetPassword : Form
     {
-        private string dots = null;
         public Helpers misc = new Helpers();
         public SetPassword()
         {
@@ -19,22 +18,22 @@ namespace Password_Book
 
         public void Add()
         {
-            new Thread(() => timer1_Tick()).Start();
             Invoke(new Action(() =>
             {
                 string folder = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\{misc.GenerateHash($"{Environment.UserName}", $"{misc.getHwid()}")}";
                 start:
                 try
                 {
-                    label2.Text = $"Crypting your data{dots}";
+                    label2.Text = $"Crypting your data";
                     FileStream fs = File.Create($"{folder}\\{misc.GenerateHash(Environment.UserName, misc.getHwid())}");
                     fs.Close();
                     StreamWriter sw = new StreamWriter($"{folder}\\{misc.GenerateHash(Environment.UserName, misc.getHwid())}");
-                    label2.Text = $"Writing crypted data to db{dots}";
+                    label2.Text = $"Writing crypted data to db";
                     sw.WriteLine(misc.GenerateHash(misc.getHwid(), $"{Environment.UserName}"), "\n"); // crypted hwid
                     sw.WriteLine(misc.GenerateHash(guna2TextBox1.Text, $"{misc.getHwid()}"), "\n"); // crypted pass
-                    label2.Text = $"Restarting{dots}";
+                    label2.Text = $"Restarting";
                     sw.Close();
+                    Thread.CurrentThread.Abort();
                     Application.Restart();
                 }
                 catch (DirectoryNotFoundException)
@@ -54,19 +53,6 @@ namespace Password_Book
         private void guna2CirclePictureBox1_Click(object sender, EventArgs e)
         {
             Process.GetCurrentProcess().Kill();
-        }
-
-        private void timer1_Tick()
-        {
-            while (true)
-            {
-                dots = ".";
-                Thread.Sleep(10);
-                dots = "..";
-                Thread.Sleep(10);
-                dots = "...";
-                Thread.Sleep(10);
-            }
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.IO;
 using System.Threading;
+using System.Diagnostics;
 
 namespace Password_Book
 {
@@ -45,6 +46,7 @@ namespace Password_Book
                 MainForm main = new MainForm();
                 Clipboard.SetText($"{login}:{pass}");
                 Program.mf.label7.Text = "Copied";
+                Thread.CurrentThread.Abort();
                 this.Close();
             }));
         }
@@ -56,7 +58,7 @@ namespace Password_Book
 
         private void guna2CirclePictureBox1_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Process.GetCurrentProcess().Kill();
         }
     }
 }

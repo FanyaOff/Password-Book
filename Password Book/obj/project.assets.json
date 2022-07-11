@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     ".NETFramework,Version=v4.7.2": {
-      "Guna.UI2.WinForms/2.0.3.2": {
+      "Guna.UI2.WinForms/2.0.3.3": {
         "type": "package",
         "compile": {
           "lib/net40/Guna.UI2.dll": {}
@@ -151,7 +151,7 @@
       }
     },
     ".NETFramework,Version=v4.7.2/win": {
-      "Guna.UI2.WinForms/2.0.3.2": {
+      "Guna.UI2.WinForms/2.0.3.3": {
         "type": "package",
         "compile": {
           "lib/net40/Guna.UI2.dll": {}
@@ -300,7 +300,7 @@
       }
     },
     ".NETFramework,Version=v4.7.2/win-x64": {
-      "Guna.UI2.WinForms/2.0.3.2": {
+      "Guna.UI2.WinForms/2.0.3.3": {
         "type": "package",
         "compile": {
           "lib/net40/Guna.UI2.dll": {}
@@ -449,7 +449,7 @@
       }
     },
     ".NETFramework,Version=v4.7.2/win-x86": {
-      "Guna.UI2.WinForms/2.0.3.2": {
+      "Guna.UI2.WinForms/2.0.3.3": {
         "type": "package",
         "compile": {
           "lib/net40/Guna.UI2.dll": {}
@@ -599,15 +599,15 @@
     }
   },
   "libraries": {
-    "Guna.UI2.WinForms/2.0.3.2": {
-      "sha512": "eemzZE4IrzNrC1Ln6KYVH0r8S8bYWUW0tu7VNXzR6d/WMu0sgTZmrp86r/vIuL1aoPESLMQnycpNbtPv2cjeQA==",
+    "Guna.UI2.WinForms/2.0.3.3": {
+      "sha512": "PGwcBC4jmWJ5+YPMjwRaBE5VB92qEWZZI8ud4gTjOC9gf81mGg/62cuiCa2/W1cgDg7nm76qdbUn5pBlTPdQSw==",
       "type": "package",
-      "path": "guna.ui2.winforms/2.0.3.2",
+      "path": "guna.ui2.winforms/2.0.3.3",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE.txt",
-        "guna.ui2.winforms.2.0.3.2.nupkg.sha512",
+        "guna.ui2.winforms.2.0.3.3.nupkg.sha512",
         "guna.ui2.winforms.nuspec",
         "icon.png",
         "lib/net40/Guna.UI2.dll"
@@ -986,7 +986,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETFramework,Version=v4.7.2": [
-      "Guna.UI2.WinForms >= 2.0.3.2",
+      "Guna.UI2.WinForms >= 2.0.3.3",
       "Microsoft.Windows.SDK.Contracts >= 10.0.19041.1",
       "System.ValueTuple >= 4.5.0"
     ]
@@ -1031,7 +1031,7 @@
         "dependencies": {
           "Guna.UI2.WinForms": {
             "target": "Package",
-            "version": "[2.0.3.2, )"
+            "version": "[2.0.3.3, )"
           },
           "Microsoft.Windows.SDK.Contracts": {
             "target": "Package",
