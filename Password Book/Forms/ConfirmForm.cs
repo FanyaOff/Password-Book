@@ -19,35 +19,38 @@ namespace Password_Book
         {
             Invoke(new Action(() => 
             {
-                label2.Text = "Validating data";
-                string folder = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\{misc.GenerateHash($"{Environment.UserName}", $"{misc.getHwid()}")}";
-                string hwid = File.ReadLines($"{folder}\\{misc.GenerateHash(Environment.UserName, misc.getHwid())}").Skip(0).First();
-                string password = File.ReadLines($"{folder}\\{misc.GenerateHash(Environment.UserName, misc.getHwid())}").Skip(1).First();
-                string dataFile = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}//{misc.GenerateHash($"{Environment.UserName}", $"{misc.getHwid()}")}//{Program.mf.guna2ComboBox1.Text}.pw";
-                string login = misc.Decrypt(File.ReadLines(dataFile).Skip(0).First());
-                string pass = misc.Decrypt(File.ReadLines(dataFile).Skip(1).First());
-                string dataHwid = File.ReadLines(dataFile).Skip(2).First();
-                if (dataHwid != misc.GenerateHash(misc.getHwid(), Environment.UserName))
+                try
                 {
-                    label2.Text = "Invalid HWID";
-                    return;
+                    label2.Text = "Validating data";
+                    string folder = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\{misc.GenerateHash($"{Environment.UserName}", $"{misc.getHwid()}")}";
+                    string hwid = File.ReadLines($"{folder}\\{misc.GenerateHash(Environment.UserName, misc.getHwid())}").Skip(0).First();
+                    string password = File.ReadLines($"{folder}\\{misc.GenerateHash(Environment.UserName, misc.getHwid())}").Skip(1).First();
+                    string dataFile = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}//{misc.GenerateHash($"{Environment.UserName}", $"{misc.getHwid()}")}//{Program.mf.guna2ComboBox1.Text}.pw";
+                    string login = misc.Decrypt(File.ReadLines(dataFile).Skip(0).First());
+                    string pass = misc.Decrypt(File.ReadLines(dataFile).Skip(1).First());
+                    string dataHwid = File.ReadLines(dataFile).Skip(2).First();
+                    if (dataHwid != misc.GenerateHash(misc.getHwid(), Environment.UserName))
+                    {
+                        label2.Text = "Invalid HWID";
+                        return;
+                    }
+                    if (misc.GenerateHash(misc.getHwid(), $"{Environment.UserName}") != hwid)
+                    {
+                        label2.Text = "Invalid HWID";
+                        return;
+                    }
+                    if (misc.GenerateHash(guna2TextBox1.Text, $"{misc.getHwid()}") != password)
+                    {
+                        label2.Text = "Invalid Password";
+                        return;
+                    }
+                    label2.Text = "Validated! Starting uncrypt";
+                    MainForm main = new MainForm();
+                    Clipboard.SetText($"{login}:{pass}");
+                    Program.mf.label7.Text = "Copied";
+                    this.Close();
                 }
-                if (misc.GenerateHash(misc.getHwid(), $"{Environment.UserName}") != hwid)
-                {
-                    label2.Text = "Invalid HWID";
-                    return;
-                }
-                if (misc.GenerateHash(guna2TextBox1.Text, $"{misc.getHwid()}") != password)
-                {
-                    label2.Text = "Invalid Password";
-                    return;
-                }
-                label2.Text = "Validated! Starting uncrypt";
-                MainForm main = new MainForm();
-                Clipboard.SetText($"{login}:{pass}");
-                Program.mf.label7.Text = "Copied";
-                Thread.CurrentThread.Abort();
-                this.Close();
+                catch(ThreadAbortException) { this.Close(); }
             }));
         }
 

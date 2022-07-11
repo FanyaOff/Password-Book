@@ -34,13 +34,13 @@ namespace Password_Book
                     label2.Text = $"Restarting";
                     sw.Close();
                     Thread.CurrentThread.Abort();
-                    Application.Restart();
                 }
                 catch (DirectoryNotFoundException)
                 {
                     Directory.CreateDirectory(folder);
                     goto start;
                 }
+                catch (ThreadAbortException) { Application.Restart(); }
             }));
                 
         }

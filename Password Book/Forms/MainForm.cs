@@ -40,35 +40,37 @@ namespace Password_Book
         {
             Invoke(new Action(() =>
             {
-                if (nameBox.Text == "" || loginBox.Text == "" || passBox.Text == "")
+                try
                 {
-                    label7.Text = "Invalid data";
-                    return;
-                }
+                    if (nameBox.Text == "" || loginBox.Text == "" || passBox.Text == "")
+                    {
+                        label7.Text = "Invalid data";
+                        return;
+                    }
                 start:
-                string folder = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}//{misc.GenerateHash($"{Environment.UserName}", $"{misc.getHwid()}")}";
-                if (Directory.Exists(folder))
-                {
-                    label7.Text = "Crypting data";
-                    FileStream fs = File.Create($"{folder}//{nameBox.Text}.pw");
-                    fs.Close();
-                    StreamWriter sw = new StreamWriter($"{folder}//{nameBox.Text}.pw");
-                    label7.Text = "Writing data";
-                    sw.WriteLine($"{misc.Encrypt($"{loginBox.Text}")}", "\n");
-                    sw.WriteLine($"{misc.Encrypt($"{passBox.Text}")}", "\n");
-                    sw.WriteLine($"{misc.GenerateHash(misc.getHwid(), Environment.UserName)}");
-                    sw.Close();
-                    label7.Text = "Updating";
-                    updateList();
-                    label7.Text = "Succeful added!";
-                    nameBox.Text = null;
-                    loginBox.Text = null;
-                    passBox.Text = null;
-                    Thread.CurrentThread.Abort();
-                    return;
-                }
-                Directory.CreateDirectory(folder);
-                goto start;
+                    string folder = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}//{misc.GenerateHash($"{Environment.UserName}", $"{misc.getHwid()}")}";
+                    if (Directory.Exists(folder))
+                    {
+                        label7.Text = "Crypting data";
+                        FileStream fs = File.Create($"{folder}//{nameBox.Text}.pw");
+                        fs.Close();
+                        StreamWriter sw = new StreamWriter($"{folder}//{nameBox.Text}.pw");
+                        label7.Text = "Writing data";
+                        sw.WriteLine($"{misc.Encrypt($"{loginBox.Text}")}", "\n");
+                        sw.WriteLine($"{misc.Encrypt($"{passBox.Text}")}", "\n");
+                        sw.WriteLine($"{misc.GenerateHash(misc.getHwid(), Environment.UserName)}");
+                        sw.Close();
+                        label7.Text = "Updating";
+                        updateList();
+                        label7.Text = "Succeful added!";
+                        nameBox.Text = null;
+                        loginBox.Text = null;
+                        passBox.Text = null;
+                        return;
+                    }
+                    Directory.CreateDirectory(folder);
+                    goto start;
+                } catch(ThreadAbortException) { }
             }));
         }
 
