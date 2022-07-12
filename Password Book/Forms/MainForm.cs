@@ -38,40 +38,50 @@ namespace Password_Book
 
         public void addThread()
         {
-            Invoke(new Action(() =>
+            try
             {
-                try
+                if (nameBox.Text == "" || loginBox.Text == "" || passBox.Text == "")
                 {
-                    if (nameBox.Text == "" || loginBox.Text == "" || passBox.Text == "")
+                    Invoke(new Action(() =>
                     {
                         label7.Text = "Invalid data";
-                        return;
-                    }
-                start:
-                    string folder = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}//{misc.GenerateHash($"{Environment.UserName}", $"{misc.getHwid()}")}";
-                    if (Directory.Exists(folder))
+                    }));
+                    return;
+                }
+            start:
+                string folder = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}//{misc.GenerateHash($"{Environment.UserName}", $"{misc.getHwid()}")}";
+                if (Directory.Exists(folder))
+                {
+                    Invoke(new Action(() =>
                     {
                         label7.Text = "Crypting data";
-                        FileStream fs = File.Create($"{folder}//{nameBox.Text}.pw");
-                        fs.Close();
-                        StreamWriter sw = new StreamWriter($"{folder}//{nameBox.Text}.pw");
+                    }));
+                    FileStream fs = File.Create($"{folder}//{nameBox.Text}.pw");
+                    fs.Close();
+                    StreamWriter sw = new StreamWriter($"{folder}//{nameBox.Text}.pw");
+                    Invoke(new Action(() =>
+                    {
                         label7.Text = "Writing data";
-                        sw.WriteLine($"{misc.Encrypt($"{loginBox.Text}")}", "\n");
-                        sw.WriteLine($"{misc.Encrypt($"{passBox.Text}")}", "\n");
-                        sw.WriteLine($"{misc.GenerateHash(misc.getHwid(), Environment.UserName)}");
-                        sw.Close();
+                    }));
+                    sw.WriteLine($"{misc.Encrypt($"{loginBox.Text}")}", "\n");
+                    sw.WriteLine($"{misc.Encrypt($"{passBox.Text}")}", "\n");
+                    sw.WriteLine($"{misc.GenerateHash(misc.getHwid(), Environment.UserName)}");
+                    sw.Close();
+                    Invoke(new Action(() =>
+                    {
                         label7.Text = "Updating";
                         updateList();
                         label7.Text = "Succeful added!";
                         nameBox.Text = null;
                         loginBox.Text = null;
                         passBox.Text = null;
-                        return;
-                    }
-                    Directory.CreateDirectory(folder);
-                    goto start;
-                } catch(ThreadAbortException) { }
-            }));
+                    }));
+                    return;
+                }
+                Directory.CreateDirectory(folder);
+                goto start;
+            }
+            catch (ThreadAbortException) { }
         }
 
         public void updateList()
@@ -95,21 +105,41 @@ namespace Password_Book
 
         private void guna2Button3_Click(object sender, EventArgs e)
         {
+            new Thread(() => reset()).Start();
+        }
+
+        public void reset()
+        {
+
             string folder = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\{misc.GenerateHash($"{Environment.UserName}", $"{misc.getHwid()}")}";
             Directory.Delete(folder, recursive: true);
-            Application.Restart();
+            Invoke(new Action(() =>
+            {
+                Application.Restart();
+            }));
         }
 
         private void guna2Button4_Click(object sender, EventArgs e)
         {
-            if (guna2ComboBox1.SelectedIndex == -1)
+            new Thread(() => remove()).Start();
+        }
+        public void remove()
+        {
+            Invoke(new Action(() =>
             {
-                label7.Text = "Please, select a value";
-                return;
-            }
+                if (guna2ComboBox1.SelectedIndex == -1)
+                {
+                    label7.Text = "Please, select a value";
+                    return;
+                }
+            }));
             string folder = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}//{misc.GenerateHash($"{Environment.UserName}", $"{misc.getHwid()}")}";
-            File.Delete($"{folder}//{guna2ComboBox1.Text}.pw");
-            updateList();
+            Invoke(new Action(() =>
+            {
+                File.Delete($"{folder}//{guna2ComboBox1.Text}.pw");
+                updateList();
+                label7.Text = $"Removed {guna2ComboBox1.Text}";
+            }));
         }
     }
 }
